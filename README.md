@@ -49,17 +49,24 @@ $$
 
 ## 📋 필수 파일 및 경로
 
-스크립트를 실행하기 전, 본인의 Google Drive에 다음과 같은 구조로 원본 데이터 파일이 준비되어 있어야 합니다.
-
-* **지정 경로 (Path):**
-    * `/content/drive/MyDrive/위아이티/`
-* **필수 파일 (Files):**
-    * `building_info.csv`
-    * `train.csv`
-    * `test.csv`
-    * `sample_submission.csv`
+스크립트를 실행하기 전, 본인의 Google Drive **`/content/drive/MyDrive/위아이티/`** 경로에 다음 4개의 원본 데이터 파일이 준비되어 있어야 합니다.
 
 *(만약 경로가 다르다면, 스크립트 내의 `path` 변수를 수정해야 합니다.)*
+
+* **`train.csv`**
+    * **(입력)** 모델 학습 및 검증에 사용될 85일간의 원본 시계열 데이터입니다.
+    * **(처리)** `building_info.csv`와 **결합(merge)**된 후, 8월 18일을 기준으로 `model_train_set`과 `model_valid_set`으로 **분리(split)**됩니다.
+
+* **`test.csv`**
+    * **(입력)** **최종 예측(final prediction)**의 대상이 되는 7일간의 기상 예보 데이터입니다.
+    * **(처리)** `building_info.csv`와 결합되며, `train` 데이터의 통계량(일조/일사 등)으로 보간됩니다.
+
+* **`building_info.csv`**
+    * **(입력)** 100개 건물의 유형, 면적, 설비 정보가 담긴 메타데이터입니다.
+    * **(처리)** `train.csv`와 `test.csv` 양쪽 모두에 **결합(merge)**되어, 데이터를 3개의 '장비그룹'으로 나누는 등 핵심 피처로 사용됩니다.
+
+* **`sample_submission.csv`**
+    * **(입력)** 최종 제출 양식 파일입니다. (본 전처리 스크립트에서는 참고용으로 로드됩니다.)
 
 ---
 
