@@ -120,6 +120,21 @@ $$
 
 `데이터_전처리.ipynb`에서 생성된 9개의 CSV 파일을 입력받아, SAINT 모델을 학습시키고 최종 예측을 수행합니다.
 
+## 🧠 모델 선정 이유 (Model Selection)
+
+본 대회는 '전력사용량'이라는 시계열(Time-series) 데이터와 '건물 정보', '기상 데이터' 등 다양한 **정형 데이터(Tabular Data)**를 함께 다뤄야 하는 복합적인 문제입니다.
+
+따라서 단순한 시계열 모델을 넘어, 정형 데이터의 피처 간 복잡한 상호작용을 효과적으로 학습할 수 있는 딥러닝 모델이 필요했습니다.
+
+**SAINT (Self-Attention and Intersample Attention Transformer)** 모델은 Transformer의 강력한 어텐션 메커니즘을 정형 데이터에 맞게 적용하여, 딥러닝 기반 정형 데이터 예측에서 SOTA(State-of-the-Art) 성능을 보이는 모델이므로, 최종 모델로 선정하였습니다.
+
+---
+
+## 🚀 실행 환경
+
+* Google Colab (GPU): SAINT 모델의 Transformer 구조는 연산량이 많으므로...
+(이하 동일)
+
 ### 🚀 실행 환경
 * **Google Colab (GPU)**: `SAINT` 모델의 Transformer 구조는 연산량이 많으므로 **GPU 런타임** 사용이 필수적입니다.
 * **핵심 라이브러리**: `pytorch-widedeep` (SAINT 모델 구현체)
@@ -151,3 +166,10 @@ $$
 3.  **시퀀스 업데이트:** `test.csv`의 `t+1` 시점 기상 예보와 2번의 예측값을 조합하여 `t+1` 레코드를 만들고, 시퀀스에 추가합니다.
 4.  **반복:** 이 과정을 7일(168 스텝) 동안 반복하여 `test` 기간 전체의 예측값을 생성합니다.
 5.  **결합:** 3개 그룹의 예측 결과를 `pd.concat`을 통해 `final_answer.csv`로 통합하여 제출합니다.
+
+## 📈 최종 결과 (Final Result)
+
+`SAINT.ipynb` 노트북의 재귀 예측(Recursive Forecasting)을 통해 생성된 `final_answer.csv` 파일을 Dacon 리더보드에 제출하였습니다.
+
+* **대회 목표:** 입상을 위해서는 Public Score 기준 SMAPE 5.5 이하의 성능이 필요했습니다.
+* **최종 성과:** 본 SAINT 모델은 **SMAPE 7.1**을 기록하여, 아쉽게도 입상에는 실패하였습니다.
